@@ -1,12 +1,12 @@
 // Copyright (c) 2022 The ZMK Contributors
 // SPDX-License-Identifier: MIT
 
-#include "../zmk-nodefree-config/helper.h"
-#include "../zmk-nodefree-config/keypos_def/keypos_36keys.h"
+#include "zmk-nodefree-config/helper.h"
+#include "zmk-nodefree-config/keypos_def/keypos_36keys.h"
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
-#include <dt-bindings/zmk/dynamic-macros.h>
+// #include <dt-bindings/zmk/dynamic-macros.h> PR #2678 required
 
 #define XXX &none
 #define TODO XXX
@@ -18,12 +18,13 @@
 #define MERGE 3
 #define MEDIA 4
 
-#define S_UNDO &kp C_AC_UNDO
-#define S_CUT &kp C_AC_CUT
-#define S_COPY &kp C_AC_COPY
-#define S_PASTE &kp C_AC_PASTE
-#define S_REDO &kp C_AC_REDO
-
+#define S_UNDO &kp LG(Z)
+#define S_CUT &kp LG(X)
+#define S_COPY &kp LG(C)
+#define S_PASTE &kp LG(V)
+#define S_REDO &kp LG(LS(Z))
+#define NEXT_TAB &kp LG(LS(RBKT))
+#define PREV_TAB &kp LG(LS(LBKT))
 /* ------------------------ general config ----------------------- */
 // smart-layer config
 &caps_word {  
@@ -52,7 +53,7 @@ ZMK_CONDITIONAL_LAYER(NUM SYM, MERGE)
 /* ---------------------------- special behaviors --------------------------- */
 // Alt+Tab swapper, requires PR #1366
 ZMK_BEHAVIOR(swapper, tri_state,
-    bindings = <&kt LALT>, <&kp TAB>, <&kt LALT>;
+    bindings = <&kt LGUI>, <&kp TAB>, <&kt LGUI>;
     ignored-key-positions = <LM1>; // shift-alt-tab 
 )
 
@@ -177,6 +178,11 @@ ZMK_BEHAVIOR(num_dance, tap_dance,
 )
 
 /* ------------------------------- mod-morphs ------------------------------- */
+// tap: next tab  | shift + tap: prev tab
+ZMK_BEHAVIOR(nav_tab_morph, mod_morph,
+    bindings = <NEXT_TAB>, <PREV_TAB>;
+    mods = <(MOD_LSFT|MOD_RSFT)>;
+)
 // tap: comma | shift + tap: semicolon 
 ZMK_BEHAVIOR(comma_morph, mod_morph,
     mods = <(MOD_LSFT|MOD_RSFT)>;
@@ -226,15 +232,15 @@ ZMK_BEHAVIOR(fn_ast, mod_morph, bindings = <&kp ASTRK>, <&kp INSERT>; mods = <(M
 ZMK_BEHAVIOR(fn_fslh, mod_morph, bindings = <&kp FSLH>, <&kp CAPS>; mods = <(MOD_LSFT|MOD_RSFT)>;)
 
 // tap: play | shift + tap: record
-ZMK_BEHAVIOR(dyn_macro_morph, mod_morph,
-    bindings = <&dyn_macro PLAY>, <&dyn_macro RECORD>;
-    mods = <(MOD_LSFT|MOD_RSFT)>;
-)
+//ZMK_BEHAVIOR(play_rec, dyn_macro_morph, mod_morph,
+//    bindings = <&dyn_macro PLAY>, <&dyn_macro RECORD>;
+//    mods = <(MOD_LSFT|MOD_RSFT)>;
+//)
 
 / {
-    chosen {
-        zmk,matrix_transform = &five_column_transform;
-    };
+    //chosen {
+    //    zmk,matrix_transform = &five_column_transform;
+    //};
 
     keymap {
         compatible = "zmk,keymap";
@@ -243,7 +249,7 @@ ZMK_BEHAVIOR(dyn_macro_morph, mod_morph,
             &kp B     &kp L     &kp D     &kp W     &kp Z     &kp APOS    &kp F     &kp O        &kp U      &kp J 
             H_LGUI(N) H_LALT(R) H_LCTL(T) H_LSFT(S) &kp G     &kp Y       H_RSFT(H) H_RCTL(A)    H_RALT(E)  H_RGUI(I) 
             &kp Q     &kp X     &kp M     &kp C     &kp V     &kp K       &kp P     &comma_morph &dot_morph &qmark_morph
-                                &kp C_MUTE SMRT_NUM SK_SHFT   &spc_morph  SMRT_SYM  XXX 
+                                SMRT_NUM SK_SHFT   &spc_morph  SMRT_SYM  XXX XXX
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN  &inc_dec_kp UP DOWN>;
         };
@@ -252,26 +258,26 @@ ZMK_BEHAVIOR(dyn_macro_morph, mod_morph,
             &swapper  &kp PLUS  &kp MINUS  &kp EQUAL  &kp CARET  &fn_pcnt   &fn_6  &fn_7  &fn_8  &fn_ast 
             SK_LGUI   SK_LALT   SK(LCTL)   SK(LSFT)   &kp HASH   &fn_dot    &fn_0  &fn_1  &fn_2  &fn_9 
             S_UNDO    S_CUT     S_COPY     S_PASTE    S_REDO     &fn_dllr   &fn_3  &fn_4  &fn_5  &fn_fslh
-                                XXX        ___        ___        &kp SPACE  ___    XXX 
+                                           ___        ___        &kp SPACE  ___ XXX    XXX 
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp UP DOWN>;
         };
         sym_layer {
             bindings = <
-            &kp TILDE     &kp LT        &kp LBKT  &kp RBKT  &kp GT        &kp HOME  &kp PG_DN  &kp PG_UP  &kp END    &dyn_macro_morph
+            &kp TILDE     &kp LT        &kp LBKT  &kp RBKT  &kp GT        &kp HOME  &kp PG_DN  &kp PG_UP  &kp END    &nav_tab_morph
             H_LGUI(GRAVE) H_LALT(UNDER) &kp LPAR  &kp RPAR  H_LCTL(AMPS)  &kp LEFT  &kp DOWN   &kp UP     &kp RIGHT  &kp ENTER 
             &kp BSLH      &kp AT        &kp LBRC  &kp RBRC  &kp PIPE      &kp ESC   &kp BSPC   &kp DEL    &kp TAB    &key_repeat 
-                                        ___       ___       XXX           ___       ___        XXX 
+                                        ___       ___                     ___       ___   XXX     XXX 
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp UP DOWN>;
         };
  
         merge_layer {
             bindings = <
-            &swapper &kp PLUS  &kp MINUS  &kp EQUAL  &kp CARET  &kp HOME  &kp PG_DN  &kp PG_UP  &kp END    &dyn_macro_morph
+            &swapper &kp PLUS  &kp MINUS  &kp EQUAL  &kp CARET  &kp HOME  &kp PG_DN  &kp PG_UP  &kp END    &nav_tab_morph
             SK_LGUI  SK_LALT   SK(LCTL)   SK(LSFT)   SMRT_MED   &kp LEFT  &kp DOWN   &kp UP     &kp RIGHT  &kp ENTER 
             S_UNDO   S_CUT     S_COPY     S_PASTE    S_REDO     &kp ESC   &kp BSPC   &kp DEL    &kp TAB    &key_repeat
-                               XXX        ___        ___        ___       ___        XXX 
+                                          ___        ___        ___       ___    XXX    XXX 
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp UP DOWN>;
         };
