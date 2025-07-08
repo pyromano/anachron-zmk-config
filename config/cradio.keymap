@@ -309,6 +309,7 @@ ZMK_BEHAVIOR(fn_fslh, mod_morph, bindings = <&kp FSLH>, <&kp CAPS>; mods = <(MOD
 #define GLOBAL_COMBO(name, keypos, bindings) LAYER_COMBO(name, keypos, bindings, ALL)
 // GLOBAL_COMBO(bksp, RB1 RB2, &kp BSPC)
 // GLOBAL_COMBO(del, RB2 RB3, &kp DEL)
+GLOBAL_COMBO(gesc, LT3 LT2, &kp ESC)
 GLOBAL_COMBO(numl, RB3 RB4, &num_word)
 GLOBAL_COMBO(dot_spc, LH0 RH0, &dot_spc)
 
