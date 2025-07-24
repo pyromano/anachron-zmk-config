@@ -162,8 +162,12 @@ ZMK_BEHAVIOR(smrt_shft_morph, mod_morph,
 ZMK_BEHAVIOR(smrt_layer, hold_tap,
     flavor = "hold-preferred"; // in most cases we want to avoid taps
     tapping-term-ms = <STICKY_TAP_MS>; 
-    bindings = <&mo>, <&sl>; 
+    bindings = <&mo>, <&meh_dance>; 
 ) 
+ZMK_BEHAVIOR(meh_dance, tap_dance,
+    tapping-term-ms = <300>; 
+    bindings = <&sl SYM>, <&kp C_PP>, <&kp C_MUTE>;
+)
 
 // tap: sticky-num | hold: num | double-tap: num-word | triple-tap: num-lock
 #define SMRT_NUM &smrt_num NUM NUM
@@ -309,7 +313,8 @@ ZMK_BEHAVIOR(fn_fslh, mod_morph, bindings = <&kp FSLH>, <&kp CAPS>; mods = <(MOD
 #define GLOBAL_COMBO(name, keypos, bindings) LAYER_COMBO(name, keypos, bindings, ALL)
 // GLOBAL_COMBO(bksp, RB1 RB2, &kp BSPC)
 // GLOBAL_COMBO(del, RB2 RB3, &kp DEL)
-GLOBAL_COMBO(gesc, LT3 LT2, &kp ESC)
+GLOBAL_COMBO(gesc, RM1 RM2, &kp ESC)
+GLOBAL_COMBO(gret, RM2 RM3, &kp ENTER)
 GLOBAL_COMBO(numl, RB3 RB4, &num_word)
 GLOBAL_COMBO(dot_spc, LH0 RH0, &dot_spc)
 
