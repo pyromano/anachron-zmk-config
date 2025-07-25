@@ -99,6 +99,7 @@ ZMK_BEHAVIOR(dyn_macro, dynamic_macro, wait-ms = <10>;)
 // #define H_RCTL(key) &hmr RCTL key
 // #define H_RALT(key) &hmrg RALT key
 // #define H_RGUI(key) &hmrg RGUI key
+#define H_MEH(key) &mt LC(LS(LALT)) key 
 
 /* --------------------------- sticky key behaviors -------------------------- */
 // global config
@@ -252,7 +253,7 @@ ZMK_BEHAVIOR(fn_fslh, mod_morph, bindings = <&kp FSLH>, <&kp CAPS>; mods = <(MOD
             bindings = <
             &kp B     &kp L     &kp D     &kp W     &kp Z     &kp APOS    &kp F     &kp O        &kp U      &kp J 
             H_LGUI(N) H_LALT(R) H_LCTL(T) H_LSFT(S) &kp G     &kp Y       H_RSFT(H) H_RCTL(A)    H_RALT(E)  H_RGUI(I) 
-            &kp Q     &kp X     &kp M     &kp C     &kp V     &kp K       &kp P     &comma_morph &dot_morph &qmark_morph
+            &kp Q     H_MEH(X)  &kp M     &kp C     &kp V     &kp K       &kp P     &comma_morph &dot_morph &qmark_morph
                                 SMRT_NUM SK_SHFT   &spc_morph  SMRT_SYM  XXX XXX
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN  &inc_dec_kp UP DOWN>;
