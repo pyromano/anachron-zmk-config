@@ -316,6 +316,9 @@ ZMK_BEHAVIOR(fn_fslh, mod_morph, bindings = <&kp FSLH>, <&kp CAPS>; mods = <(MOD
 // GLOBAL_COMBO(del, RB2 RB3, &kp DEL)
 GLOBAL_COMBO(gesc, RM1 RM2, &kp ESC)
 GLOBAL_COMBO(gret, RM2 RM3, &kp ENTER)
+GLOBAL_COMBO(cut, LB3 LB1, &kp LG(X))
+GLOBAL_COMBO(copy, LB3 LB2, &kp LG(C))
+GLOBAL_COMBO(paste, LB2 LB1, &kp LG(V))
 GLOBAL_COMBO(numl, RB3 RB4, &num_word)
 GLOBAL_COMBO(dot_spc, LH0 RH0, &dot_spc)
 
