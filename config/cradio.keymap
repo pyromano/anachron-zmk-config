@@ -178,7 +178,7 @@ ZMK_BEHAVIOR(num_dance, tap_dance,
     bindings = <&sl NUM>, <&num_word>, <&tog NUM>; // todo: to or tog?
 )
 // tap: copy | double-tap: cut | hold: paste
-ZMK_TAP_DANCE(ccp,
+ZMK_BEHAVIOR(ccp, tap_dance,
     tapping-term-ms = <200>;
     bindings = <&mt LG(V) LG(C)>, <&kp LG(X)>;
 )
@@ -261,9 +261,9 @@ ZMK_BEHAVIOR(fn_fslh, mod_morph, bindings = <&kp FSLH>, <&kp CAPS>; mods = <(MOD
         };
         num_layer {
             bindings = <
-            &swapper  &kp PLUS  &kp MINUS  &kp EQUAL  &kp CARET  &fn_pcnt   &fn_6  &fn_7  &fn_8  &fn_ast 
-            SK_LGUI   SK_LALT   SK(LCTL)   SK(LSFT)   &kp HASH   &fn_dot    &fn_0  &fn_1  &fn_2  &fn_9 
-            S_UNDO    PREV_TAB  NEXT_TAB   &ccp       S_REDO     &fn_dllr   &fn_3  &fn_4  &fn_5  &fn_fslh
+            &swapper  &kp PLUS  &kp MINUS  &kp EQUAL  &kp CARET  &fn_pcnt   &fn_7  &fn_8  &fn_9  &fn_ast 
+            SK_LGUI   SK_LALT   SK(LCTL)   SK(LSFT)   &kp HASH   &fn_dot    &fn_0  &fn_1  &fn_2  &fn_3 
+            S_UNDO    PREV_TAB  NEXT_TAB   &ccp       S_REDO     &fn_dllr   &fn_4  &fn_5  &fn_6  &fn_fslh
                                            ___        ___        &kp SPACE  ___ XXX    XXX 
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp UP DOWN>;
