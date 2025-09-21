@@ -163,12 +163,8 @@ ZMK_BEHAVIOR(smrt_shft_morph, mod_morph,
 ZMK_BEHAVIOR(smrt_layer, hold_tap,
     flavor = "hold-preferred"; // in most cases we want to avoid taps
     tapping-term-ms = <STICKY_TAP_MS>; 
-    bindings = <&mo>, <&meh_dance>; 
+    bindings = <&mo>, <&sl>; 
 ) 
-ZMK_BEHAVIOR(meh_dance, tap_dance,
-    tapping-term-ms = <300>; 
-    bindings = <&sl SYM>, <&kp C_PP>, <&kp C_MUTE>;
-)
 
 // tap: sticky-num | hold: num | double-tap: num-word | triple-tap: num-lock
 #define SMRT_NUM &smrt_num NUM NUM
@@ -181,11 +177,16 @@ ZMK_BEHAVIOR(num_dance, tap_dance,
     tapping-term-ms = <300>; 
     bindings = <&sl NUM>, <&num_word>, <&tog NUM>; // todo: to or tog?
 )
+// tap: copy | double-tap: cut | hold: paste
+ZMK_TAP_DANCE(ccp,
+    tapping-term-ms = <200>;
+    bindings = <&mt LG(V) LG(C)>, <&kp LG(X)>;
+)
 
 /* ------------------------------- mod-morphs ------------------------------- */
-// tap: next tab  | shift + tap: prev tab
-ZMK_BEHAVIOR(nav_tab_morph, mod_morph,
-    bindings = <NEXT_TAB>, <PREV_TAB>;
+// tap: pause  | shift + tap: mute
+ZMK_BEHAVIOR(pp_mute_morph, mod_morph,
+    bindings = <&kp C_PP>, <&kp C_MUTE>;
     mods = <(MOD_LSFT|MOD_RSFT)>;
 )
 // tap: comma | shift + tap: semicolon 
@@ -262,14 +263,14 @@ ZMK_BEHAVIOR(fn_fslh, mod_morph, bindings = <&kp FSLH>, <&kp CAPS>; mods = <(MOD
             bindings = <
             &swapper  &kp PLUS  &kp MINUS  &kp EQUAL  &kp CARET  &fn_pcnt   &fn_6  &fn_7  &fn_8  &fn_ast 
             SK_LGUI   SK_LALT   SK(LCTL)   SK(LSFT)   &kp HASH   &fn_dot    &fn_0  &fn_1  &fn_2  &fn_9 
-            S_UNDO    S_CUT     S_COPY     S_PASTE    S_REDO     &fn_dllr   &fn_3  &fn_4  &fn_5  &fn_fslh
+            S_UNDO    PREV_TAB  NEXT_TAB   &ccp       S_REDO     &fn_dllr   &fn_3  &fn_4  &fn_5  &fn_fslh
                                            ___        ___        &kp SPACE  ___ XXX    XXX 
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp UP DOWN>;
         };
         sym_layer {
             bindings = <
-            &kp TILDE     &kp LT        &kp LBKT  &kp RBKT  &kp GT        &kp HOME  &kp PG_DN  &kp PG_UP  &kp END    &nav_tab_morph
+            &kp TILDE     &kp LT        &kp LBKT  &kp RBKT  &kp GT        &kp HOME  &kp PG_DN  &kp PG_UP  &kp END    &pp_mute_morph
             H_LGUI(GRAVE) H_LALT(UNDER) &kp LPAR  &kp RPAR  H_LCTL(AMPS)  &kp LEFT  &kp DOWN   &kp UP     &kp RIGHT  &kp ENTER 
             &kp BSLH      &kp AT        &kp LBRC  &kp RBRC  &kp PIPE      &kp ESC   &kp BSPC   &kp DEL    &kp TAB    &key_repeat 
                                         ___       ___                     ___       ___   XXX     XXX 
@@ -279,7 +280,7 @@ ZMK_BEHAVIOR(fn_fslh, mod_morph, bindings = <&kp FSLH>, <&kp CAPS>; mods = <(MOD
  
         merge_layer {
             bindings = <
-            &swapper &kp PLUS  &kp MINUS  &kp EQUAL  &kp CARET  &kp HOME  &kp PG_DN  &kp PG_UP  &kp END    &nav_tab_morph
+            &swapper &kp PLUS  &kp MINUS  &kp EQUAL  &kp CARET  &kp HOME  &kp PG_DN  &kp PG_UP  &kp END    &pp_mute_morph
             SK_LGUI  SK_LALT   SK(LCTL)   SK(LSFT)   SMRT_MED   &kp LEFT  &kp DOWN   &kp UP     &kp RIGHT  &kp ENTER 
             S_UNDO   S_CUT     S_COPY     S_PASTE    S_REDO     &kp ESC   &kp BSPC   &kp DEL    &kp TAB    &key_repeat
                                           ___        ___        ___       ___    XXX    XXX 
