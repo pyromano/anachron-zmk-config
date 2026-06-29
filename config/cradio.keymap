@@ -23,8 +23,6 @@
 #define S_COPY &kp LG(C)
 #define S_PASTE &kp LG(V)
 #define S_REDO &kp LG(LS(Z))
-#define NEXT_TAB &kp LG(LS(RBKT))
-#define PREV_TAB &kp LG(LS(LBKT))
 /* ------------------------ general config ----------------------- */
 // smart-layer config
 &caps_word {  
@@ -177,11 +175,6 @@ ZMK_BEHAVIOR(num_dance, tap_dance,
     tapping-term-ms = <300>; 
     bindings = <&sl NUM>, <&num_word>, <&tog NUM>; // todo: to or tog?
 )
-// tap: copy | double-tap: cut | hold: paste
-ZMK_BEHAVIOR(ccp, tap_dance,
-    tapping-term-ms = <200>;
-    bindings = <&mt LG(V) LG(C)>, <&kp LG(X)>;
-)
 
 /* ------------------------------- mod-morphs ------------------------------- */
 // tap: pause  | shift + tap: mute
@@ -263,7 +256,7 @@ ZMK_BEHAVIOR(fn_fslh, mod_morph, bindings = <&kp FSLH>, <&kp CAPS>; mods = <(MOD
             bindings = <
             &swapper  &kp PLUS  &kp MINUS  &kp EQUAL  &kp CARET  &fn_pcnt   &fn_7  &fn_8  &fn_9  &fn_ast 
             SK_LGUI   SK_LALT   SK(LCTL)   SK(LSFT)   &kp HASH   &fn_dot    &fn_0  &fn_1  &fn_2  &fn_3 
-            S_UNDO    PREV_TAB  NEXT_TAB   &ccp       S_REDO     &fn_dllr   &fn_4  &fn_5  &fn_6  &fn_fslh
+            S_UNDO    S_CUT     S_COPY     S_PASTE    S_REDO     &fn_dllr   &fn_4  &fn_5  &fn_6  &fn_fslh
                                            ___        ___        &kp SPACE  ___ XXX    XXX 
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp UP DOWN>;
@@ -315,7 +308,8 @@ ZMK_BEHAVIOR(fn_fslh, mod_morph, bindings = <&kp FSLH>, <&kp CAPS>; mods = <(MOD
 #define GLOBAL_COMBO(name, keypos, bindings) LAYER_COMBO(name, keypos, bindings, ALL)
 // GLOBAL_COMBO(bksp, RB1 RB2, &kp BSPC)
 // GLOBAL_COMBO(del, RB2 RB3, &kp DEL)
-GLOBAL_COMBO(gesc, RM1 RM2, &kp ESC)
+GLOBAL_COMBO(gesc, LM1 LM2, &kp ESC)
+GLOBAL_COMBO(gbksp, RM1 RM2, &kp BSPC)
 GLOBAL_COMBO(gret, RM2 RM3, &kp ENTER)
 GLOBAL_COMBO(cut, LB3 LB1, &kp LG(X))
 GLOBAL_COMBO(copy, LB3 LB2, &kp LG(C))
